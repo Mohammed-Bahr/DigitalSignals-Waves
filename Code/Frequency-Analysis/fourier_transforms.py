@@ -25,8 +25,9 @@ FFT   — Fast Fourier Transform (Cooley-Tukey algorithm)
   For large N the speed difference is dramatic.
 """
 
-import numpy as np
 import time
+
+import numpy as np
 
 
 class FourierTransforms:
@@ -79,11 +80,11 @@ class FourierTransforms:
         X = np.zeros(N, dtype=complex)
 
         start = time.perf_counter()
-        n = np.arange(N)                         # sample indices
+        n = np.arange(N)  # sample indices
         for k in range(N):
             # Twiddle factor for bin k: W_N^k = e^{-j2πkn/N}
             twiddle = np.exp(-1j * 2 * np.pi * k * n / N)
-            X[k] = np.dot(x, twiddle)            # inner product = Σ x[n]·W
+            X[k] = np.dot(x, twiddle)  # inner product = Σ x[n]·W
         elapsed = time.perf_counter() - start
 
         freqs = np.arange(N)
@@ -121,7 +122,7 @@ class FourierTransforms:
         mag = np.abs(X)
         threshold = 1e-6 * np.max(mag) if np.max(mag) > 0 else 1e-10
         ph = np.angle(X, deg=True)
-        ph[mag < threshold] = 0.0     # suppress numerical noise
+        ph[mag < threshold] = 0.0  # suppress numerical noise
         return ph
 
     @staticmethod
